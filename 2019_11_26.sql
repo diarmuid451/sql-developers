@@ -134,3 +134,23 @@ FROM emp;
 --인자중에 첫번째로 등장하는 NULL이 아닌 exprN을 리턴
 --expr1 is not null -> exril을 리턴
 --expr1 is null -> COALESCE(expr2, expr3, expr4...)
+
+--function (condition 실습 cond 1)
+--emp 테이블을 이용하여 deptno에 따라 부서명으로 변경해서 다음과 같이 조회되는 쿼리를 작성하세요.
+SELECT empno, ename
+        ,CASE
+            WHEN deptno = 10 THEN 'ACCOUNTING'
+            WHEN deptno = 20 THEN 'RESEARCH'
+            WHEN deptno = 30 THEN 'SALES'
+            WHEN deptno = 40 THEN 'OPERATIONS'
+            ELSE 'DDIT'
+        END DNAME
+FROM emp;
+
+--function (condtion 실습 cond2)
+SELECT empno, ename, hiredate
+        ,CASE 
+            WHEN MOD(TO_NUMBER(TO_CHAR(hiredate, 'yyyy')),2) = MOD(TO_NUMBER(TO_CHAR(SYSDATE, 'yyyy')),2) THEN '건강검진 대상자'
+            ELSE '건강검진 비대상자'
+        END contact_to_doctor
+FROM emp;
