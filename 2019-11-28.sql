@@ -1,3 +1,58 @@
+--emp 테이블, dept 테이블 조인
+--4
+SELECT *
+FROM  dept;
+
+UPDATE dept SET dname = 'MARKET SALES'
+WHERE deptno != '30';
+
+SELECT ename, emp.deptno, dept.dname
+FROM emp, dept
+WHERE emp.deptno = dept.deptno
+AND emp.deptno=30;
+
+SELECT ename, deptno
+FROM emp;
+
+SELECT deptno, dname
+FROM dept;
+
+
+--natural join : 조인 테이블간 같은 타입, 같은이름의 컬럼으로
+--               같은 값을 갖을 경우 조인
+DESC emp;
+DESC dept;
+
+--ANSI SQL
+SELECT deptno, a.empno, ename
+FROM emp a NATURAL JOIN dept b;
+
+--oracle 문법
+SELECT a.deptno, empno, ename
+FROM emp a, dept b
+WHERE a.deptno = b.deptno;
+
+--JOIN USING 
+--join 하려고하는 테이블간 동일한 이름의 컬럼이 두개 이상일 때
+--join 컬럼을 하나만 사용하고 싶을 때
+
+--ANSI SQL
+SELECT *
+FROM emp JOIN dept USING (deptno);
+
+--ORACLE SQL
+SELECT *
+FROM emp, dept
+WHERE emp.deptno = dept.deptno;
+
+--ANSI JOIN with ON
+--조인 하고자 하는 테이블의 컬럼 이름이 다를 때
+--개발자가 조인 조건을 직접 제어할 때
+
+SELECT *
+FROM emp JOIN dept ON (emp.deptno = dept.deptno);
+
+--oracle
 select emp.deptno, empno, ename
 from emp, dept
 where emp.deptno = dept.deptno;
@@ -70,13 +125,10 @@ ORDER BY emp.deptno;
 
 
 --join0_1
-select a.empno, a.ename, a.deptno, a.dname
-from 
-(select empno, ename, emp.deptno, dname
+select empno, ename, emp.deptno, dname
 from emp, dept
-where emp.deptno = dept.deptno
-ORDER BY emp.deptno)a 
-where a.deptno = 10 OR a.deptno = 30;
+where emp.deptno = dept.deptno AND (emp.deptno = 10 OR emp.deptno = 30)
+ORDER BY emp.deptno;
 
 select empno, ename, emp.deptno, dname
 from emp JOIN dept ON (emp.deptno = dept.deptno)
@@ -116,3 +168,30 @@ select empno, ename,sal, emp.deptno, dname
 from emp, dept
 where emp.deptno = dept.deptno AND sal > 2500 AND empno > 7600 AND dname = 'RESEARCH'
 ORDER BY emp.deptno;
+
+--join1
+select lprod_gu, lprod_nm, prod_id, prod_name
+from prod, lprod
+where lprod_gu = prod_lgu;
+
+select lprod_gu, lprod_nm, prod_id, prod_name
+from prod JOIN lprod ON (lprod_gu = prod_lgu);
+
+--join2
+select buyer_id, buyer_name, prod_id, prod_name
+from prod, buyer
+where buyer_lgu = prod_lgu
+ORDER BY buyer_id;
+
+select buyer_id, buyer_name, prod_id, prod_name
+from prod JOIN buyer ON (buyer_lgu = prod_lgu)
+ORDER BY buyer_id;
+
+--join3
+select *
+from cart;
+
+select *
+from member;
+
+select mem_id, mem_name, prod_id, prod_name, cart_qty
