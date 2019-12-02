@@ -152,6 +152,11 @@ from (select TO_CHAR(b.buy_date, 'YY/MM/DD') BUY_DATE,b.buy_prod, b.BUY_QTY
 from buyprod b
 WHERE b.buy_date = '2005-01-25') a RIGHT OUTER JOIN prod p ON ( a.buy_prod = p.prod_id);
 
+select b.buy_date, b.buy_prod, p.prod_id, p.prod_name, b.buy_qty
+from buyprod b RIGHT OUTER JOIN prod p ON(b.buy_prod = p.prod_id AND b.buy_date = '2005-01-25');
+
+
+
 
 --outerjoin 2
 select NVL(a.BUY_DATE,'05/01/25'), a.buy_prod, p.prod_id, p.prod_name, a.BUY_QTY
@@ -165,3 +170,19 @@ select NVL(a.BUY_DATE,'05/01/25'), a.buy_prod, p.prod_id, p.prod_name, NVL(a.BUY
 from (select TO_CHAR(b.buy_date, 'YY/MM/DD') BUY_DATE,b.buy_prod, b.BUY_QTY
 from buyprod b
 WHERE b.buy_date = '2005-01-25') a RIGHT OUTER JOIN prod p ON ( a.buy_prod = p.prod_id);
+
+
+--outerjoin 4
+select *
+from cycle;
+
+select *
+from product;
+
+
+select p.pid,   p.PNM, NVL(c.CID, 1) cid, NVL(c.DAY, 0) day, NVL(c.CNT,0) cnt
+from product p LEFT OUTER JOIN cycle c ON(p.pid = c.PID AND c.cid =1);
+
+--outerjoin 5
+select p.pid,   p.PNM, NVL(c.CID, 1) cid, NVL(c.DAY, 0) day, NVL(c.CNT,0) cnt
+from product p LEFT OUTER JOIN cycle c ON(p.pid = c.PID AND c.cid =1);
