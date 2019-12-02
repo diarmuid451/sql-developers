@@ -75,19 +75,17 @@ from CUSTOMER, cycle, product
 where customer.cid = cycle.cid AND cycle.pid = product.pid AND customer.cid != 3;
 
 --join6
-select pid, count(pid) 
-from cycle
-group by PID;
-
-select pid, sum(cnt)
-from cycle 
-group by pid;
-
-
-select customer.cid, customer.cnm, cycle.pid, product.pnm, cycle.cnt
+select customer.cid, customer.cnm, cycle.pid, product.pnm,sum(cycle.cnt) cnt
 from CUSTOMER, product, cycle
-where cycle.cid = CUSTOMER.CID AND product.pid = cycle.PID;
+where cycle.cid = CUSTOMER.CID AND product.pid = cycle.PID
+group by customer.cid, customer.cnm, cycle.pid, product.pnm
+order by customer.cid;
 
+SELECT customer.cid, customer.CNM, a.pid, product.PNM, a.cnt    
+FROM (select cid, pid, sum(cnt) cnt
+from cycle
+group by cid, pid) a JOIN customer ON(a.cid = customer.cid) JOIN product ON(a.pid = product.pid)
+;
 
 --join 7
 select pid, sum(cnt)
@@ -99,3 +97,4 @@ from product, (select pid, sum(cnt) b
 from cycle
 group by pid) a
 where product.pid = a.pid;
+
