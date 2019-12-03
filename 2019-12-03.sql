@@ -132,5 +132,9 @@ from  fastfood
 where gb = '롯데리아' AND sido = '대전광역시'
 group by sido, sigungu 
 order by sigungu) b
-where a.sigungu = b.sigungu;
+where a.sigungu = b.sigungu
+order by 도시발전지수 DESC;
 
+select *
+from tax
+order by sal DESC;

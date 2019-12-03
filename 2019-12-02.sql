@@ -183,6 +183,10 @@ from product;
 select p.pid,   p.PNM, NVL(c.CID, 1) cid, NVL(c.DAY, 0) day, NVL(c.CNT,0) cnt
 from product p LEFT OUTER JOIN cycle c ON(p.pid = c.PID AND c.cid =1);
 
+select p.pid,   p.PNM, NVL(c.CID, 1) cid, NVL(c.DAY, 0) day, NVL(c.CNT,0) cnt
+from product p, cycle c
+where p.pid = c.PID(+) AND c.cid(+) =1;
+
 --outerjoin 5
 select *
 from customer;
@@ -190,3 +194,9 @@ from customer;
 select p.pid,   p.PNM, NVL(c.CID, 1) cid, NVL(customer.CNM,(select cnm from customer where customer.cid = 1)) cnm, NVL(c.DAY, 0) day, NVL(c.CNT,0) cnt
 from product p LEFT OUTER JOIN cycle c ON(p.pid = c.PID AND c.cid =1)
                 LEFT OUTER JOIN customer ON(c.cid = customer.cid);
+                
+select a.pid, a.pnm, a.cid, NVL(customer.CNM,(select cnm from customer where customer.cid = 1)) cnm, a.day, a.cnt
+from (select p.pid,   p.PNM, NVL(c.CID, 1) cid, NVL(c.DAY, 0) day, NVL(c.CNT,0) cnt
+from product p, cycle c
+where p.pid = c.PID(+) AND c.cid(+) =1) a, customer
+where a.cid = customer.cid;
