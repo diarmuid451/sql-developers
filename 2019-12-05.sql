@@ -1,3 +1,4 @@
+
 --실습 sub4
 INSERT INTO dept VALUES (99,'ddit','daejeon');
 commit;
