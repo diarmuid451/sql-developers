@@ -133,12 +133,12 @@ select SEQ, lpad(' ', (level-1)*4) || TITLE as TITLE
 from board_test 
 start with parent_seq IS NULL
 connect by prior seq = parent_seq
-order siblings by seq desc;
+order siblings by nvl(parent_seq,seq) desc;
  
  
 --실습 h_8
 select SEQ, lpad(' ', (level-1)*4) || TITLE as TITLE, 
-case when parent_seq is null then seq else 0 end o1,
+case when parent_seq is null then seq else 0 end,
 case when parent_seq is not null then seq else 0 end o2
 from board_test 
 start with parent_seq IS NULL
